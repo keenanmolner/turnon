@@ -42,6 +42,23 @@ webglRenderer.setSize(window.innerWidth, window.innerHeight);
 var scene = new THREE.Scene();
 var camera = new THREE.Camera();
 
+// ELLIOTT AUDIO STUFF
+// create AudioListener object
+var listener = new THREE.AudioListener();
+// add it to the camera
+camera.add( listener );
+// create Audio object and add it to the listener
+var track = new THREE.Audio( listener );
+// create AudioLoader object
+var audioLoader = new THREE.AudioLoader();
+// load song into AudioLoader object
+audioLoader.load( 'assets/audio/idea.wav', function( buffer ) {
+	track.setBuffer( buffer );
+	track.setLoop(true);
+	track.setVolume(0.5);
+	track.play();
+});
+
 /* AXIS HELPER */
 /* add an axis object in the scene */
 var axisObject = new THREE.AxisHelper( 1 );
@@ -121,7 +138,7 @@ animate();
 function animate() {
 
 	requestAnimationFrame( animate );
-	
+
 	/* Update uniforms */
 	updateUniforms();
 
