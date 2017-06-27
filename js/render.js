@@ -41,7 +41,6 @@ webglRenderer.setSize(window.innerWidth, window.innerHeight);
  */
 var scene = new THREE.Scene();
 var camera = new THREE.Camera();
-var size = webglRenderer.getSize();
 
 /* AXIS HELPER */
 /* add an axis object in the scene */
@@ -58,13 +57,9 @@ var material = new THREE.RawShaderMaterial( {
 
 	uniforms: {
 
-		map: { value: this.renderTarget.texture },
-
-		// centerCoordinate: { value: new THREE.Vector2() },
-
-		// K: { value: sc.state.lensDistortion },
-
-		// viewportSize: { value: new THREE.Vector2() },
+		amplitude: { value: 5.0 },
+		opacity:   { value: 0.3 },
+		color:     { value: new THREE.Color( 0xff0000 ) }
 
 	},
 
