@@ -1,31 +1,92 @@
 <!DOCTYPE html>
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Turn On</title>
+<html lang="en">
 
-<link href="./bml_files/style.css" rel="stylesheet">
-<link href="./bml_files/button.css" rel="stylesheet">
-<style>
+  <head>
 
-body { font-family: "Helvetica Neue", sans-serif; position: relative; margin: 0; }
-p { text-align: left; }
-h1, h2, #example, .figures { text-align: center; }
-#options { width: 960px; margin: 0 auto; text-align: center; }
-#options p { text-align: center !important; }
-.small { font-size: small; }
-#breadcrumbs { display: none; }
-#wrap { margin: 0 auto; width: 960px; }
-#vis { padding-top: 1em; text-align: center; }
-#c { vertical-align: middle; background: #fff; }
-#c.fullscreen { position: absolute; top: 0; overflow: hidden; }
-#w, #h { width: 40px; }
-#example svg { border: solid #ccc 1px; cursor: pointer; }
-rect.car-0 { fill: #00f; }
-rect.car-1 { fill: #f00; }
-.play rect { fill: #fff; fill-opacity: .5; }
+    <title>Turn On</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
 
-</style>
+  </head>
 
-</head><body>
+    <body>
+
+    <div id="container">
+
+      <!-- Bottons for controlling the scene -->
+<!--       <div class="btnWrapper">
+
+        <div id="modelBtn">Model Control</div>
+        <div id="viewerPositionBtn">Viewer Position</div>
+        <div id="viewerTargetBtn">Viewer Target</div>
+        <div id="addPointLightBtn">Add Point Light</div>
+        <div id="addDirectionalLightBtn">Add Dir. Light</div>
+        <div id="pointLightCtrlBtn">Point Light Control</div>
+        <div id="directionalLightCtrlBtn">Dir. Light Control</div>
+        <div id="positionVal"></div>
+
+      </div> -->
+
+
+      <div class="renderCanvas"></div>
+
+    </div>
+
+    <!-- libraries -->
+    <script src="js/libs/three-r84.min.js" type="text/javascript"></script> -->3
+    <script src="js/libs/jquery-3.2.1.min.js" type="text/javascript"></script>
+
+    <!-- shaders -->
+<!--     <script src="js/shaders/vShaderGouraudAmbient.js" type="text/javascript"></script>
+    <script src="js/shaders/fShaderGouraudAmbient.js" type="text/javascript"></script>
+
+    <script src="js/shaders/vShaderGouraudDiffuse.js" type="text/javascript"></script>
+    <script src="js/shaders/fShaderGouraudDiffuse.js" type="text/javascript"></script>
+
+    <script src="js/shaders/vShaderGouraud.js" type="text/javascript"></script>
+    <script src="js/shaders/fShaderGouraud.js" type="text/javascript"></script>
+
+    <script src="js/shaders/vShaderPhong.js" type="text/javascript"></script>
+    <script src="js/shaders/fShaderPhong.js" type="text/javascript"></script>
+
+    <script src="js/shaders/vShaderMultiPhong.js" type="text/javascript"></script>
+    <script src="js/shaders/fShaderMultiPhong.js" type="text/javascript"></script>
+ -->
+
+    <script src="js/shaders/vShader.js" type="text/javascript"></script>
+    <script src="js/shaders/fShader.js" type="text/javascript"></script>
+
+
+    <!-- some utility functions -->
+<!--     <script src="js/utils.js" type="text/javascript"></script> -->
+
+    <!-- Our display parameters class -->
+<!--     <script src="js/displayParameters.js" type="text/javascript"></script> -->
+
+    <!-- Our teapot class -->
+<!--     <script src="js/teapot.js" type="text/javascript"></script> -->
+
+    <!-- Our state controller class -->
+<!--     <script src="js/stateController.js" type="text/javascript"></script> -->
+
+    <!-- Our model/view/matrix class -->
+<!--     <script src="js/transform.js" type="text/javascript"></script> -->
+
+    <!-- Our standard renderer class -->
+<!--     <script src="js/standardRenderer.js" type="text/javascript"></script> -->
+
+    <!-- main script for rendering -->
+    <script src="js/render.js" type="text/javascript"></script>
+
+
+  </body>
+
+</html>
+
+
+
+<!-- <body>
 <div id="vis" style="line-height: 512px"><canvas id="c" width="769" height="512" onclick="main()"></canvas></div>
 
 <div id="wrap">
@@ -349,4 +410,4 @@ function coprime(a, b) {
 }
 
 </script>
-</p></body></html>
+</p></body></html> -->
