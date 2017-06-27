@@ -1,15 +1,7 @@
 /**
- * @file EE267 Virtual Reality
- * Homework 2 - Lighting, Shading and GLSL
- *
- * In our homework, we heavily rely on THREE.js library for rendering.
- * THREE.js is a wonderful library to render a complicated scene without
- * cumbersome raw WebGL/OpenGL programming related to GPU use. Furthermore,
- * it also hides most of the math of computer graphics to allow designers to
- * focus on the scene creation. However, this homework does not use such
- * capabilities. We will compute them manually to understand the mathematics
- * behind the rendering pipeline!
- *
+ * TURNON.STUDIO
+ * Based on starter code from Stanford EE267: Virtual Reality
+ * 
  * Instructor: Gordon Wetzstein <gordon.wetzstein@stanford.edu>,
  * 			   Robert Konrad <rkkonrad@stanford.edu>,
  * 			   Hayato Ikoma <hikoma@stanford.edu>,

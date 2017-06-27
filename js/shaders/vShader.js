@@ -18,31 +18,15 @@ var shader = document.createTextNode( `
  * to a fragment shader. In the fragment shader, these variables are
  * linearly interpolated between neighboring vertexes.
  */
-// varying vec3 normalCam;
-// varying vec3 fragPosCam;
 
-// uniform mat4 modelViewMat;
-// uniform mat4 projectionMat;
-// uniform mat3 normalMat;
-
-attribute vec3 position;
-// attribute vec3 normal;
-
+uniform float amplitude;
+attribute vec3 displacement;
+attribute vec3 customColor;
+varying vec3 vColor;
 void main() {
-
-	/* Compute the normalized surface normal in camera space */
-	//normalCam = normalize( normalMat * normal );
-
-	/***
-	 * Compute position of the vertex in camera space.
-	 * Since this value is going to be linearly interpolated to be a position
-	 * of fragment, the varialbe is named to be "fragPosCam."
-	 */
-	//fragPosCam = vec3( modelViewMat * vec4( position, 1.0 ) );
-
-	//gl_Position = projectionMat * modelViewMat * vec4( position, 1.0 );
-	gl_Position = vec4( position, 1.0 );
-
+	vec3 newPosition = position + amplitude * displacement;
+	vColor = customColor;
+	gl_Position = projectionMatrix * modelViewMatrix * vec4( newPosition, 1.0 );
 }
 ` );
 
