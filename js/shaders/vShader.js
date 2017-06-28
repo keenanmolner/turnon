@@ -1,5 +1,5 @@
 /**
- * @file Phong vertex shader only with point lights
+ * @file vertex shader
  *
  * @author Hayato Ikoma <hikoma@stanford.edu>
  * @author Robert Konrad <rkkonrad@stanford.edu>
@@ -11,7 +11,7 @@ Stanford Junior University
 
 
 var shaderID = "vShader";
-
+console.log(shaderID);
 var shader = document.createTextNode( `
 /**
  * varying qualifier is used for passing variables from a vertex shader
@@ -19,14 +19,14 @@ var shader = document.createTextNode( `
  * linearly interpolated between neighboring vertexes.
  */
 
-uniform float amplitude;
-attribute vec3 displacement;
-attribute vec3 customColor;
-varying vec3 vColor;
+// uniform float amplitude;
+// attribute vec3 displacement;
+// attribute vec3 customColor;
+// varying vec3 vColor;
 void main() {
-	vec3 newPosition = position + amplitude * displacement;
-	vColor = customColor;
-	gl_Position = projectionMatrix * modelViewMatrix * vec4( newPosition, 1.0 );
+	  gl_Position = projectionMatrix *
+                modelViewMatrix *
+                vec4(position,1.0);
 }
 ` );
 
