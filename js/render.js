@@ -1,7 +1,7 @@
 /**
  * TURNON.STUDIO
  * Based on starter code from Stanford EE267: Virtual Reality
- * 
+ *
  * Instructor: Gordon Wetzstein <gordon.wetzstein@stanford.edu>,
  * 			   Robert Konrad <rkkonrad@stanford.edu>,
  * 			   Hayato Ikoma <hikoma@stanford.edu>,
@@ -60,6 +60,12 @@ audioLoader.load( 'assets/audio/idea.wav', function( buffer ) {
 	track.play();
 });
 
+// set up audio analyzer
+var analyser = new THREE.AudioAnalyser( track, 128 );
+// set the bin count of the analyzer (even though this turns into 64 for some reason in the animate loop)
+analyser.fftSize = 128;
+analyser.frequencyBinCount = 128;
+
 /* AXIS HELPER */
 /* add an axis object in the scene */
 var axisObject = new THREE.AxisHelper( 1 );
@@ -67,15 +73,23 @@ axisObject.position.set( 0, 0, 0 );
 scene.add( axisObject );
 /* END AXIS HELPER */
 
+// ELLIOTT's TEST GEOMETRY CODE
+var testGeometry = new THREE.SphereGeometry( 0.1, 5, 5 );
+var testMaterial = new THREE.MeshBasicMaterial( {color: 0xff00ff} )
+var testSphere = new THREE.Mesh( testGeometry, testMaterial );
+testSphere.position.set( 0,0,0);
+scene.add( testSphere );
+
+
 
 /* Canvas for drawing with the shader */
 this.renderTarget = new THREE.WebGLRenderTarget( size.width, size.height );
 
-var material = new THREE.RawShaderMaterial( {
+//var material = new THREE.RawShaderMaterial( {
 
-	uniforms: {
+	//uniforms: {
 
-		map: { value: this.renderTarget.texture },
+		//map: { value: this.renderTarget.texture },
 
 		// centerCoordinate: { value: new THREE.Vector2() },
 
@@ -83,17 +97,17 @@ var material = new THREE.RawShaderMaterial( {
 
 		// viewportSize: { value: new THREE.Vector2() },
 
-	},
+	//},
 
-	vertexShader: $( "#vShader" ).text(),
+	//vertexShader: $( "#vShader" ).text(),
 
-	fragmentShader: $( "#fShader" ).text()
+	//fragmentShader: $( "#fShader" ).text()
 
-} );
+//} );
 
-var mesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 2, 2 ), material );
+//var mesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 2, 2 ), material );
 
-scene.add( mesh );
+//scene.add( mesh );
 
 
 /* Add any updates to the uniforms in this function. This info gets passed to the shaders */
@@ -143,6 +157,19 @@ animate();
 function animate() {
 
 	requestAnimationFrame( animate );
+	//var bufferLength = analyser.frequencyBinCount;
+	//var freq = analyser.getAverageFrequency();
+	//console.log(freq);
+	var data = analyser.getFrequencyData();
+	var length = data.length;
+
+	//console.log(data);
+
+	//var testGeometry = new THREE.SphereGeometry( 5, 32, 32 );
+	//var testMaterial = new THREE.MeshBasicMaterial( {color: 0xffff00} )
+	//var testSphere = new THREE.Mesh( testGeometry, testMaterial );
+	//testSphere.position.set( 0,-10,-10);
+	//scene.add( testSphere );
 
 	/* Update uniforms */
 	updateUniforms();
