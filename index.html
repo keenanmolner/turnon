@@ -21,10 +21,10 @@
 
     <!-- Vertex Shader -->
     <script type="x-shader/x-vertex" id="vShader">
-      uniform float amplitude;
-      attribute vec3 displacement;
-      attribute vec3 customColor;
-      varying vec3 vColor;
+      // uniform float amplitude;
+      // attribute vec3 displacement;
+      // attribute vec3 customColor;
+      // varying vec3 vColor;
       void main() {
         gl_Position = projectionMatrix *
                 modelViewMatrix *
@@ -38,46 +38,21 @@
       // uniform float opacity;
       // varying vec3 vColor;
       void main() {
-        gl_FragColor = vec4(1.0,  // R
-                      0.0,  // G
-                      1.0,  // B
-                      1.0); // A
+        if(gl_FragCoord.x < 0.5){
+          gl_FragColor = vec4(1.0,  // R
+                0.0,  // G
+                0.0,  // B
+                1.0); // A      
+        } else {
+          gl_FragColor = vec4(0.0,  // R
+              1.0,  // G
+              0.0,  // B
+              1.0); // A    
+        }
+
         //gl_FragColor = vec4( vColor * color, opacity );
       }
     </script>
-
-    <!-- shaders -->
-<!--     <script src="js/shaders/vShaderGouraudAmbient.js" type="text/javascript"></script>
-    <script src="js/shaders/fShaderGouraudAmbient.js" type="text/javascript"></script>
-
-    <script src="js/shaders/vShaderGouraudDiffuse.js" type="text/javascript"></script>
-    <script src="js/shaders/fShaderGouraudDiffuse.js" type="text/javascript"></script>
-
-    <script src="js/shaders/vShaderGouraud.js" type="text/javascript"></script>
-    <script src="js/shaders/fShaderGouraud.js" type="text/javascript"></script>
-
-    <script src="js/shaders/vShaderPhong.js" type="text/javascript"></script>
-    <script src="js/shaders/fShaderPhong.js" type="text/javascript"></script>
-
-    <script src="js/shaders/vShaderMultiPhong.js" type="text/javascript"></script>
-    <script src="js/shaders/fShaderMultiPhong.js" type="text/javascript"></script>
-
-
-    <script src="js/shaders/vShader.js" type="text/javascript"></script>
-    <script src="js/shaders/fShader.js" type="text/javascript"></script>
- -->
-
-    <!-- some utility functions -->
-<!--     <script src="js/utils.js" type="text/javascript"></script> -->
-
-    <!-- Our display parameters class -->
-<!--     <script src="js/displayParameters.js" type="text/javascript"></script> -->
-
-    <!-- Our teapot class -->
-<!--     <script src="js/teapot.js" type="text/javascript"></script> -->
-
-    <!-- Our state controller class -->
-<!--     <script src="js/stateController.js" type="text/javascript"></script> -->
 
     <!-- main script for rendering -->
     <script>
@@ -95,7 +70,15 @@
 
     function init() {
       //set up the camera 
-      camera = new THREE.OrthographicCamera( window.innerWidth / - 2, window.innerWidth / 2, window.innerHeight / 2, window.innerHeight / - 2, 1, 1000 );
+      var SCREEN_WIDTH = window.innerWidth, SCREEN_HEIGHT = window.innerHeight;
+      camera = new THREE.OrthographicCamera( SCREEN_WIDTH / - 2, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, SCREEN_HEIGHT / - 2, 1, 1000);
+
+
+      // var VIEW_ANGLE = 45, ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 1, FAR = 10000;
+      // camera = new THREE.PerspectiveCamera( VIEW_ANGLE, ASPECT, NEAR, FAR);
+      camera.position.set( 0, 0, 1 );
+      camera.up = new THREE.Vector3(0,1,0);
+      camera.lookAt(new THREE.Vector3(0,0,0));
 
       //set up the scene 
       scene = new THREE.Scene();
@@ -113,30 +96,34 @@
         vertexShader:   document.getElementById( 'vShader' ).textContent,
         fragmentShader: document.getElementById( 'fShader' ).textContent,
         blending:       THREE.AdditiveBlending,
+        side: THREE.DoubleSide, 
         depthTest:      false,
-        transparent:    true
+        transparent:    false
       });
 
       //plane object 
-      var geometry = new THREE.PlaneGeometry(100, 100, 100);
+       var planeGeometry = new THREE.PlaneGeometry(SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
 
-      geometry.center();
-      var vertices = geometry.vertices;
-      var buffergeometry = new THREE.BufferGeometry();
-      var position = new THREE.Float32BufferAttribute( vertices.length * 3, 3 ).copyVector3sArray( vertices );
-      buffergeometry.addAttribute( 'position', position );
-      var displacement = new THREE.Float32BufferAttribute( vertices.length * 3, 3 );
-      buffergeometry.addAttribute( 'displacement', displacement );
-      var customColor = new THREE.Float32BufferAttribute( vertices.length * 3, 3 );
-      buffergeometry.addAttribute( 'customColor', customColor );
-      var color = new THREE.Color( 0xffffff );
-      for( var i = 0, l = customColor.count; i < l; i ++ ) {
-        color.setHSL( i / l, 0.5, 0.5 );
-        color.toArray( customColor.array, i * customColor.itemSize );
-      }
-      object = new THREE.Line( buffergeometry, shaderMaterial );
-      object.rotation.x = 0.2;
-      scene.add( object );
+      // set up textures on plane
+
+      // var vertices = geometry.vertices;
+      // var buffergeometry = new THREE.BufferGeometry();
+      // var position = new THREE.Float32BufferAttribute( vertices.length * 3, 3 ).copyVector3sArray( vertices );
+      // buffergeometry.addAttribute( 'position', position );
+      // var displacement = new THREE.Float32BufferAttribute( vertices.length * 3, 3 );
+      // buffergeometry.addAttribute( 'displacement', displacement );
+      // var customColor = new THREE.Float32BufferAttribute( vertices.length * 3, 3 );
+      // buffergeometry.addAttribute( 'customColor', customColor );
+      // var color = new THREE.Color( 0xffffff );
+      // for( var i = 0, l = customColor.count; i < l; i ++ ) {
+      //   color.setHSL( i / l, 0.5, 0.5 );
+      //   color.toArray( customColor.array, i * customColor.itemSize );
+      // }
+
+      //add plane to scene
+      plane = new THREE.Mesh( planeGeometry, shaderMaterial );
+      scene.add( plane );
+
 
       //Set up the webGL Renderer
       renderer = new THREE.WebGLRenderer( { antialias: true } );
@@ -175,18 +162,18 @@
 
     //Called to update the parameters. This is what changes from frame to frame.
     function render() {
-      var time = Date.now() * 0.001;
-      object.rotation.y = 0.25 * time;
-      uniforms.amplitude.value = Math.sin( 0.5 * time );
-      uniforms.color.value.offsetHSL( 0.0005, 0, 0 );
-      var attributes = object.geometry.attributes;
-      var array = attributes.displacement.array;
-      for ( var i = 0, l = array.length; i < l; i += 3 ) {
-        array[ i     ] += 0.3 * ( 0.5 - Math.random() );
-        array[ i + 1 ] += 0.3 * ( 0.5 - Math.random() );
-        array[ i + 2 ] += 0.3 * ( 0.5 - Math.random() );
-      }
-      attributes.displacement.needsUpdate = true;
+      // var time = Date.now() * 0.001;
+      // object.rotation.y = 0.25 * time;
+      // uniforms.amplitude.value = Math.sin( 0.5 * time );
+      // uniforms.color.value.offsetHSL( 0.0005, 0, 0 );
+      // var attributes = object.geometry.attributes;
+      // var array = attributes.displacement.array;
+      // for ( var i = 0, l = array.length; i < l; i += 3 ) {
+      //   array[ i     ] += 0.3 * ( 0.5 - Math.random() );
+      //   array[ i + 1 ] += 0.3 * ( 0.5 - Math.random() );
+      //   array[ i + 2 ] += 0.3 * ( 0.5 - Math.random() );
+      // }
+      // attributes.displacement.needsUpdate = true;
       renderer.render( scene, camera );
     }
   </script>
