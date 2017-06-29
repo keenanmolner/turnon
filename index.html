@@ -21,14 +21,10 @@
 
     <!-- Vertex Shader -->
     <script type="x-shader/x-vertex" id="vShader">
-      // uniform float amplitude;
-      // attribute vec3 displacement;
-      // attribute vec3 customColor;
-      // varying vec3 vColor;
       void main() {
         gl_Position = projectionMatrix *
                 modelViewMatrix *
-                vec4(position,1.0);
+                vec4(position.x, position.y, 0.0,1.0);
       }
     </script>
 
@@ -36,21 +32,24 @@
     <script type="x-shader/x-fragment" id="fShader">
       // uniform vec3 color;
       // uniform float opacity;
-      // varying vec3 vColor;
-      void main() {
-        if(gl_FragCoord.x < 0.5){
-          gl_FragColor = vec4(1.0,  // R
-                0.0,  // G
-                0.0,  // B
-                1.0); // A      
-        } else {
-          gl_FragColor = vec4(0.0,  // R
-              1.0,  // G
-              0.0,  // B
-              1.0); // A    
-        }
+      uniform vec2 screenSize;
 
-        //gl_FragColor = vec4( vColor * color, opacity );
+      varying vec3 vColor;
+      void main() {
+        // if(gl_FragCoord.x/screenSize.x < 0.){
+        //   gl_FragColor = vec4(1.0,  // R
+        //         0.0,  // G
+        //         0.0,  // B
+        //         1.0); // A      
+        // } else {
+        //   gl_FragColor = vec4(0.0,  // R
+        //       1.0,  // G
+        //       0.0,  // B
+        //       1.0); // A    
+        // }
+
+        //gl_FragColor = vec4( vColor, 1.0);
+        gl_FragColor=vec4(gl_FragCoord.x / screenSize.x, gl_FragCoord.y / screenSize.y, 0.0, 1);
       }
     </script>
 
@@ -85,6 +84,7 @@
 
       //uniforms for the shaders 
       uniforms = {
+        screenSize: {value: new THREE.Vector2(SCREEN_WIDTH, SCREEN_HEIGHT)},
         amplitude: { value: 5.0 },
         opacity:   { value: 0.3 },
         color:     { value: new THREE.Color( 0xff0000 ) }
@@ -122,6 +122,7 @@
 
       //add plane to scene
       plane = new THREE.Mesh( planeGeometry, shaderMaterial );
+      console.log(planeGeometry.vertices);
       scene.add( plane );
 
 
